@@ -7,7 +7,7 @@ using UnityEngine;
 public class PlayerStateMachine : StateMachine
 {
     // The input reader provides the player input data.
-    [SerializeField]
+    [field:SerializeField]
     public InputReader InputReader{  get; private set; }
 
     /*
