@@ -10,11 +10,18 @@ public class PlayerStateMachine : StateMachine
     [field:SerializeField] public InputReader InputReader{  get; private set; }
     [field:SerializeField] public CharacterController Controller { get; private set; }
     public Vector3 MovementVector;
+
+    //Camera movement variables
+    [field: SerializeField] public float RotationDamping { get; private set; }
+    [field: SerializeField] public float FreeLookMovementSpeed { get; private set; }
+    public Transform MainCameraTransform { get; private set; }
+
     /*
      * Intialise the player state machine by setting the initial state.
      */
     private void Start()
     {
+        MainCameraTransform=Camera.main.transform;
         //Switch the initial player state at the start of the game.
         SwitchState(new PlayerFreeLookState(this));
     }
