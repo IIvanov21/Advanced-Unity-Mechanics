@@ -16,6 +16,10 @@ public class PlayerStateMachine : StateMachine
     [field: SerializeField] public float FreeLookMovementSpeed { get; private set; }
     public Transform MainCameraTransform { get; private set; }
 
+    //Animation Variables
+    [field: SerializeField] public Animator Animator { get; private set; }
+
+
     /*
      * Intialise the player state machine by setting the initial state.
      */

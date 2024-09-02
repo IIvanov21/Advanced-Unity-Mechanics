@@ -9,6 +9,12 @@ public class PlayerFreeLookState : PlayerBaseState
      */
     public PlayerFreeLookState(PlayerStateMachine stateMachine) : base(stateMachine) { }
 
+    /*
+     * Animation variables
+     */
+    private readonly int FreeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
+    private const float AnimatorDampTime = 0.1f;
+
     public override void Enter()
     {
     }
@@ -21,7 +27,7 @@ public class PlayerFreeLookState : PlayerBaseState
     {
         stateMachine.MovementVector = CalculateMovement();
 
-        stateMachine.Controller.Move(stateMachine.MovementVector * deltaTime);
+        stateMachine.Controller.Move(stateMachine.MovementVector * deltaTime * stateMachine.FreeLookMovementSpeed);
 
         FaceMovementDirection(deltaTime);
     }
@@ -53,6 +59,18 @@ public class PlayerFreeLookState : PlayerBaseState
 
     private void FaceMovementDirection(float deltaTime)//Call in the Tick method
     {
+        //Animation Handling
+        // Check if there is no movement input (i.e., the MovementValue is zero)
+        if (stateMachine.InputReader.MovementValue == Vector2.zero)
+        {
+            // Set the FreeLookSpeed parameter in the Animator to 0 with damping, making the character stop moving in the animation
+            stateMachine.Animator.SetFloat(FreeLookSpeedHash, 0, AnimatorDampTime, deltaTime);
+            return;// Exit the method early as there's no movement
+        }
+
+        // If movement input is detected, set the FreeLookSpeed parameter in the Animator to 1 with damping
+        stateMachine.Animator.SetFloat(FreeLookSpeedHash, 1, AnimatorDampTime, deltaTime);
+
         // Smoothly rotate the character towards the movement direction
         // The rotation is interpolated using Quaternion.Lerp with rotation damping
         stateMachine.transform.rotation = Quaternion.Lerp(stateMachine.transform.rotation,
