@@ -39,7 +39,7 @@ public abstract class PlayerBaseState : State
         stateMachine.Controller.Move((motion + stateMachine.ForceReceiver.Movement) * deltaTime);
     }
 
-    private void FaceTarget()
+    protected void FaceTarget()
     {
         //If there is no target, exit early.
         if (stateMachine.Targeter.CurrentTarget == null) return;
