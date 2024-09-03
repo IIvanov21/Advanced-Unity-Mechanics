@@ -19,7 +19,9 @@ public class PlayerStateMachine : StateMachine
     //Animation Variables
     [field: SerializeField] public Animator Animator { get; private set; }
 
-
+    //Targeting References
+    [field: SerializeField]public Targeter Targeter { get; private set; }
+    [field: SerializeField]public float TargetingMovementSpeed { get; private set; }
     /*
      * Intialise the player state machine by setting the initial state.
      */

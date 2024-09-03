@@ -13,14 +13,22 @@ public class PlayerFreeLookState : PlayerBaseState
      * Animation variables
      */
     private readonly int FreeLookSpeedHash = Animator.StringToHash("FreeLookSpeed");
+    private readonly int FreeLookBlendTree = Animator.StringToHash("FreeLookBlendTree");//Add a hash, for the Free Look Blend Tree
     private const float AnimatorDampTime = 0.1f;
 
     public override void Enter()
     {
+        Debug.Log("Free State");
+        //We need to smoothly transition back to the Free Look Blend Tree when coming back from other states
+        stateMachine.Animator.CrossFadeInFixedTime(FreeLookBlendTree, AnimatorDampTime);
+        //Bind our target event to the Input Target Event
+        stateMachine.InputReader.TargetEvent += OnTarget;
     }
 
     public override void Exit()
     {
+        //Tidy up, and unsubscribe the OnTarget event
+        stateMachine.InputReader.TargetEvent += OnTarget;
     }
 
     public override void Tick(float deltaTime)
@@ -75,5 +83,16 @@ public class PlayerFreeLookState : PlayerBaseState
         // The rotation is interpolated using Quaternion.Lerp with rotation damping
         stateMachine.transform.rotation = Quaternion.Lerp(stateMachine.transform.rotation,
             Quaternion.LookRotation(stateMachine.MovementVector), deltaTime * stateMachine.RotationDamping);
+    }
+
+    private void OnTarget()
+    {
+
+        //If there is no target within the Player's range. Exit the method without switching.
+        if (!stateMachine.Targeter.SelectTarget()) return;
+        Debug.Log("Tab");
+
+        //If there is a target switch to the Targeting State
+        stateMachine.SwitchState(new PlayerTargetingState(stateMachine));
     }
 }
