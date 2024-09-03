@@ -22,6 +22,11 @@ public class PlayerStateMachine : StateMachine
     //Targeting References
     [field: SerializeField]public Targeter Targeter { get; private set; }
     [field: SerializeField]public float TargetingMovementSpeed { get; private set; }
+
+    //Attacking References
+    [field: SerializeField]public ForceReceiver ForceReceiver { get; private set; }
+    [field: SerializeField]public WeaponDamage WeaponDamage { get; private set; }
+    [field: SerializeField]public Attack[] Attacks { get; private set; }
     /*
      * Intialise the player state machine by setting the initial state.
      */

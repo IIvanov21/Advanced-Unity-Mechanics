@@ -34,8 +34,9 @@ public class PlayerFreeLookState : PlayerBaseState
     public override void Tick(float deltaTime)
     {
         stateMachine.MovementVector = CalculateMovement();
-
-        stateMachine.Controller.Move(stateMachine.MovementVector * deltaTime * stateMachine.FreeLookMovementSpeed);
+        
+        //After Movement refactoring
+        Move(stateMachine.MovementVector*stateMachine.FreeLookMovementSpeed,deltaTime);
 
         FaceMovementDirection(deltaTime);
     }

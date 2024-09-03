@@ -43,7 +43,8 @@ public class PlayerTargetingState : PlayerBaseState
 
         //Calculate normal movememnt
         stateMachine.MovementVector = CalculateMovement();
-        stateMachine.Controller.Move(stateMachine.MovementVector * deltaTime*stateMachine.TargetingMovementSpeed);
+        //After Movement refactoring
+        Move(stateMachine.MovementVector * stateMachine.TargetingMovementSpeed,deltaTime);
 
         //Face the target
         FaceTarget();
@@ -88,17 +89,5 @@ public class PlayerTargetingState : PlayerBaseState
 
     }
 
-    private void FaceTarget()
-    {
-        //If there is no target, exit early.
-        if (stateMachine.Targeter.CurrentTarget == null) return;
-
-        //If there is a target make the player always face that target.
-        //A simple version of LookAt function.
-        Vector3 facingVector = stateMachine.Targeter.CurrentTarget.transform.position-stateMachine.transform.position;
-
-        facingVector.y = 0.0f;
-
-        stateMachine.transform.rotation = Quaternion.LookRotation(facingVector);
-    }
+    
 }
