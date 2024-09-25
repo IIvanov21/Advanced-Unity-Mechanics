@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]//Ensure we can view it in the Unity Editor
-public class Attack : MonoBehaviour
+public class Attack
 {
     [field: SerializeField] public string AnimationName { get; private set; }
     [field: SerializeField] public float TransitionDuration { get; private set; }
