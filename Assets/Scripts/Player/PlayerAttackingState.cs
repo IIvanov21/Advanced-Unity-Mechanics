@@ -20,7 +20,7 @@ public class PlayerAttackingState : PlayerBaseState
         stateMachine.Animator.CrossFadeInFixedTime(attack.AnimationName, attack.TransitionDuration);
 
         // Set the damage value for the weapon based on the current attack
-        stateMachine.WeaponDamage.SetAttack(attack.Damage);
+        stateMachine.WeaponDamage.SetAttack(attack.Damage,attack.Knockback);
     }
 
     // This method is called on each frame update while in this state
