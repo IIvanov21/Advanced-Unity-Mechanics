@@ -6,7 +6,7 @@ using UnityEngine;
  * Base class for defining states in a state machine.
  */
 
-public abstract class State : MonoBehaviour
+public abstract class State 
 {
     /*
      * Called when the state is entered. Used to prepare the current state.
